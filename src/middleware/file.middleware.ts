@@ -1,5 +1,5 @@
 import {extname} from 'path';
-import { diskStorage } from 'multer';
+
 
 export const imageFileFilter = (req, file, callback) => {
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
@@ -18,3 +18,10 @@ export const editFileName = (req, file, callback) => {
     callback(null, `${name}-${randomName}${fileExtName}`);
   };
 
+export const checkBooks = (books) =>{
+  if(books.length == 0){
+    console.log("please find name again!!!");
+  }else{
+    console.log("Your books:",books)
+  }
+}

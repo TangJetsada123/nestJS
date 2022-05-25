@@ -3,7 +3,7 @@ import {UploadedFiles,UseInterceptors } from '@nestjs/common';
 import { UploadService } from "./image.service";
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import {editFileName,imageFileFilter} from '../middleware/middleware'
+import {editFileName,imageFileFilter} from '../middleware/file.middleware'
 
 @Controller('image')
 export class ImageController{

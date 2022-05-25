@@ -1,8 +1,9 @@
-import { ConsoleLogger, Injectable, Query, UploadedFile} from '@nestjs/common';
+import { Injectable} from '@nestjs/common';
 import { InjectModel} from '@nestjs/mongoose'
 import { Model } from 'mongoose';
 import {Book, BookDocument}  from './books.model'
 import { CreateBookDto } from './dto/books.dto';
+import { checkBooks} from '../middleware/file.middleware';
 
 
 @Injectable()
@@ -25,13 +26,12 @@ export class BooksService {
         return books;
      } 
 
-   async findByName(createBookDto: CreateBookDto){
-      const myBook = JSON.stringify(createBookDto);
-      const obj = JSON.parse(myBook);
-      let con = obj.name.toUpperCase().toLowerCase();
-      console.log(con)
-      const books = await this.BooksModel.find({name: {$regex: con}})
-      return books;
+   async findByName(name: string){
+         const books = await this.BooksModel.find({name: {$regex: (name).toLocaleUpperCase().toLocaleLowerCase()}})
+         console.log("Books:",books.length);
+         checkBooks(books);
+         return books;
+      
    }  
 
    async delete(id:string){

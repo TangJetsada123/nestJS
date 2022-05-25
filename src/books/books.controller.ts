@@ -1,4 +1,4 @@
-import {  Body,Controller, Delete, Get,  Param, Post, Query, Res, UploadedFile,UploadedFiles,UseInterceptors } from '@nestjs/common';
+import {  Body,Controller, Delete, Get,  Param, Post, Query} from '@nestjs/common';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/books.dto';
 
@@ -13,10 +13,10 @@ export class BooksController {
     }
 
     @Get('filter')
-    async getTask(@Query() createBookDto: CreateBookDto){
-        
-      if(createBookDto){
-          return this.bookService.findByName(createBookDto);
+    async getTask(@Query('name') name: string){
+      
+      if(name){
+        return this.bookService.findByName(name);
        }else{
            const books = await this.bookService.findAll();
            return  books;
@@ -33,9 +33,6 @@ export class BooksController {
     async delete(@Param('_id') id:string){
         return this.bookService.delete(id);
     }
-    
-    
-   
   }
 
   
