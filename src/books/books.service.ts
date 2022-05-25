@@ -26,7 +26,11 @@ export class BooksService {
      } 
 
    async findByName(createBookDto: CreateBookDto){
-      const books = await this.BooksModel.find(createBookDto);
+      const myBook = JSON.stringify(createBookDto);
+      const obj = JSON.parse(myBook);
+      let con = obj.name.toUpperCase().toLowerCase();
+      console.log(con)
+      const books = await this.BooksModel.find({name: {$regex: con}})
       return books;
    }  
 

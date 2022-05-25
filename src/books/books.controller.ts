@@ -13,7 +13,7 @@ export class BooksController {
     }
 
     @Get('filter')
-    async getTask(@Query() createBookDto:CreateBookDto){
+    async getTask(@Query() createBookDto: CreateBookDto){
         
       if(createBookDto){
           return this.bookService.findByName(createBookDto);
