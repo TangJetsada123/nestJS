@@ -4,13 +4,14 @@ import { User, UserDocument } from './users.model';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/users.dto';
 import * as  bcrypt from 'bcryptjs'
+import { InjectRepository } from '@nestjs/typeorm';
+
 
 @Injectable()
 export class UsersService {
-constructor(@InjectModel(User.name) private readonly usersModel: Model<UserDocument>){}
+constructor(@InjectModel(User.name) private usersModel: Model<UserDocument>){}
 
-async register(createUserDto: CreateUserDto): Promise<User>{
-    
+async register(createUserDto: CreateUserDto): Promise<User | string>{
         try{
             const {email,password} = createUserDto;
             console.log("Your email is:",{email});
@@ -20,8 +21,8 @@ async register(createUserDto: CreateUserDto): Promise<User>{
             if(redun == null){
                 let encryptedPassword = "";
                 encryptedPassword = await bcrypt.hash(password,10);
-                const userInfo =  this.usersModel.create({
-                        email,
+                const userInfo = new this.usersModel({
+                        email: email,
                         password: encryptedPassword
                     })
                     return userInfo;
@@ -35,11 +36,6 @@ async register(createUserDto: CreateUserDto): Promise<User>{
             return error;
         }
     }
-
-async findAll(){
-    const user = await this.usersModel.find().exec();
-    return user;
-}
 
 
 async findUser(email: string): Promise<User | undefined>{

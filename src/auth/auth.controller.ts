@@ -1,7 +1,7 @@
-import { Body, Controller, Post,Request} from "@nestjs/common";
+import { Controller, Get, Post,Request, UseGuards } from "@nestjs/common";
+import { JwtAuthGuard } from "src/guards/jwt-Guard.guard";
 import { AuthService } from "./auth.service";
 import { LocalAuhGuards } from "./local/local-auth.guards";
-import { UseGuards } from "@nestjs/common";
 
 @Controller('auth')
 export class AuthController{
@@ -10,8 +10,14 @@ export class AuthController{
     @UseGuards(LocalAuhGuards)
     @Post('signin')
     async signinLocal(@Request() req:any):Promise<any>{
-        return this.authService.loginLocal(req.User)
+        console.log(req);
+        return this.authService.loginLocal(req.user)
     }
-    
+
+    @UseGuards(JwtAuthGuard)
+    @Get('Info')
+    getInfo(@Request() req:any): Promise<any>{
+        return req.user;
+    }
 
 }
