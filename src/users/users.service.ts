@@ -37,12 +37,8 @@ async register(dto: AuthDto): Promise<Users | string>{
     }
 
 async findUser(username: string): Promise<Users | undefined>{
-   
-   
-   
     return await this.usersModel.findOne({username: username}).exec();
 }
-
 
 }
 
