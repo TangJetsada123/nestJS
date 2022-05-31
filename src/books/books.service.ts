@@ -33,6 +33,10 @@ export class BooksService {
          return books;
       
    }  
+   async  update(_id: string, createBookDto: CreateBookDto){
+      const post = await this.BooksModel.findByIdAndUpdate(_id,createBookDto)
+      return post;
+   }
 
    async delete(id:string){
       const book = await this.BooksModel.findByIdAndRemove({_id: id }).exec();

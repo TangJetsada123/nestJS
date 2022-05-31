@@ -7,10 +7,11 @@ export type UserDocument = Users & Document;
 
 @Schema()
 export class Users{
-    
-
     @Prop()
     username: string;
+   
+    @Prop()
+    email: string;
 
     @Prop()
     password: string;

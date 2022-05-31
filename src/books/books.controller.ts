@@ -1,6 +1,5 @@
-import {  Body,Controller, Delete, Get,  Param, Post, Query, UseGuards} from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { JwtAuthGuard } from 'src/guards/jwt-Guard.guard';
+import {  Body,Controller, Delete, Get,  Param, Post, Put, Query, UseGuards} from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/books.dto';
 
@@ -30,14 +29,17 @@ export class BooksController {
     async  getBookById(@Param('_id') _id: string){     
        const books = await  this.bookService.findById((_id));
        return books;}
-    
 
     @Delete(':_id')
     async delete(@Param('_id') id:string){
         return this.bookService.delete(id);
     }
 
-   
+    @Put(':_id')
+    async update(@Param() id: string,@Body() createBookDto: CreateBookDto ){
+        return this.bookService.update(id,createBookDto)
+    }
+    
   }
 
   

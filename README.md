@@ -10,6 +10,9 @@
   
 -create user 
   -jwt   
+  -hash password with bcrypt
+  -authorization 
+  
 
 
 *Json.stringify => encode to String 

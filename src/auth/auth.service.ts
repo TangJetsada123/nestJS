@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { jwtConstants } from './constants';
 import * as bcrypt from 'bcryptjs';
-import { AuthDto } from './dto/auth.dto';
+import { Users } from 'src/users/users.model';
 
 @Injectable()
 export class AuthService {
@@ -29,6 +29,11 @@ export class AuthService {
                  secret: jwtConstants.secret, 
              })
          }
+    }
+
+    async find(user: Users){
+        const info = this.userService.findUser(user.username)
+        return info;
     }
 
 
