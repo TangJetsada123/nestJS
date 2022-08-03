@@ -27,7 +27,7 @@ export class BooksService {
      } 
 
    async findByName(name: string){
-         const books = await this.BooksModel.find({name: {$regex: (name).toLocaleUpperCase().toLocaleLowerCase()}})
+         const books = await this.BooksModel.find({name: {$regex: name,$options: 'i'}})
          console.log("Books:",books.length);
          checkBooks(books);
          return books;
